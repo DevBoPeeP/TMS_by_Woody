@@ -26,6 +26,11 @@ const taskSchema = new schema(
       default: "active",
     },
 
+    dueDate: {
+      type: Date,
+      default: Date.now(),
+    },
+
     completed: {
       type: Boolean,
       default: false,
