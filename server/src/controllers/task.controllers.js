@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler";
-import TaskModel from "../models/tasks/task.model.js";
+import TaskModel from "../models/task.model.js";
 
 export const createTask = asyncHandler(async (req, res) => {
   try {

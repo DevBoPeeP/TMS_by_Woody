@@ -11,14 +11,13 @@ const generateOtp = async (userId, otpType) => {
     const randomIndex = Math.floor(Math.random() * characters.length);
     otp += characters[randomIndex];
   }
-  return otp;
   //   Get the current date
   const currentDate = new Date(Date.now());
   //   Add five minutes to the currentDate's time
   currentDate.setMinutes(currentDate.getMinutes() + 5);
   // Save the new timestamp in an expiresIn variable
   const expiresIn = currentDate.getTime();
-
+  console.log(expiresIn, otpType, userId, otp);
   try {
     const newOtp = await Otp.create({
       user: userId,
@@ -26,7 +25,6 @@ const generateOtp = async (userId, otpType) => {
       expiresIn: expiresIn,
       otpType: otpType,
     });
-
     return otp;
   } catch (error) {
     console.log(error);

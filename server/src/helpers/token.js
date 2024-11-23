@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 const generateVerifyToken = (userPayload) => {
   const token = jwt.sign(userPayload, process.env.JWT_VERIFY_SECRET, {
-    expiresIn: "5m",
+    expiresIn: "10m",
   });
   return token;
 };
@@ -14,4 +14,4 @@ const generateAccessToken = (userPayload) => {
   return token;
 };
 
-export { generateVerifyToken };
+export { generateVerifyToken, generateAccessToken };

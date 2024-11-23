@@ -4,6 +4,7 @@ import connectDB from "./src/config/db.js";
 import cors from "cors";
 import bodyParser from "body-parser";
 import authRoutes from "./src/routes/auth.routes.js";
+import userRoutes from "./src/routes/user.routes.js";
 import cookieParser from "cookie-parser";
 
 dotenv.config();
@@ -23,7 +24,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/api/v1/auth", authRoutes);
-// app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/users", userRoutes);
 app.listen(PORT, () => {
   console.log(`server running on port ${PORT}`);
 });
