@@ -48,13 +48,14 @@ export const UserContextProvider = ({ children }) => {
         name: "",
         email: "",
         password: "",
+        confirmPassword: "",
       });
 
       // redirect to login page
       router.push("/login");
     } catch (error) {
       console.log("Error registering user", error);
-      toast.error(error.response.data.message);
+      toast.error("Failed to register user. Please try again.");
     }
   };
   // login the user
@@ -115,7 +116,7 @@ export const UserContextProvider = ({ children }) => {
       router.push("/login");
     } catch (error) {
       console.log("Error logging out user", error);
-      toast.error(error.response.data.message);
+      toast.error("failed");
     }
   };
 
@@ -136,7 +137,7 @@ export const UserContextProvider = ({ children }) => {
     } catch (error) {
       console.log("Error getting user details", error);
       setLoading(false);
-      toast.error(error.response.data.message);
+      toast.error("cannot get details");
     }
   };
 
@@ -162,7 +163,7 @@ export const UserContextProvider = ({ children }) => {
     } catch (error) {
       console.log("Error updating user details", error);
       setLoading(false);
-      toast.error(error.response.data.message);
+      toast.error("cannot update details");
     }
   };
 
@@ -208,7 +209,7 @@ export const UserContextProvider = ({ children }) => {
       setLoading(false);
     } catch (error) {
       console.log("Error sending forgot password email", error);
-      toast.error(error.response.data.message);
+      toast.error("Error sending forgot password email");
       setLoading(false);
     }
   };
@@ -231,7 +232,7 @@ export const UserContextProvider = ({ children }) => {
       router.push("/login");
     } catch (error) {
       console.log("Error resetting password", error);
-      toast.error(error.response.data.message);
+      toast.error("Error resetting password");
       setLoading(false);
     }
   };
@@ -250,7 +251,7 @@ export const UserContextProvider = ({ children }) => {
       setLoading(false);
     } catch (error) {
       console.log("Error changing password", error);
-      toast.error(error.response.data.message);
+      toast.error("Error changing password");
       setLoading(false);
     }
   };
@@ -265,7 +266,7 @@ export const UserContextProvider = ({ children }) => {
       setLoading(false);
     } catch (error) {
       console.log("Error getting all users", error);
-      toast.error(error.response.data.message);
+      toast.error("Error getting all users");
       setLoading(false);
     }
   };
@@ -295,7 +296,7 @@ export const UserContextProvider = ({ children }) => {
       getAllUsers();
     } catch (error) {
       console.log("Error deleting user", error);
-      toast.error(error.response.data.message);
+      toast.error("Error deleting user");
       setLoading(false);
     }
   };
