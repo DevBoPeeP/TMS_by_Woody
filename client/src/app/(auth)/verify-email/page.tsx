@@ -9,9 +9,9 @@ function page() {
   const router = useRouter();
 
   useEffect(() => {
-    // redirect to home page if user is already logged in
+    // redirect to login page if user is already verified
     if (user && user._id) {
-      router.push("/");
+      router.push("/login");
     }
   }, [user, router]);
 

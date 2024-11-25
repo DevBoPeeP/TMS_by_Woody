@@ -16,7 +16,7 @@ export const UserContextProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [allUsers, setAllUsers] = useState([]);
   const [userState, setUserState] = useState({
-    name: "",
+    fullName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -34,30 +34,64 @@ export const UserContextProvider = ({ children }) => {
       toast.error("Please enter a valid email and password (min 6 characters)");
       return;
     }
-
+    console.log(userState);
     try {
       const res = await axios.post(
         `${serverUrl}/api/v1/auth/register`,
         userState
       );
       console.log("User registered successfully", res.data);
+      sessionStorage.setItem("verificationToken", res.data.verificationToken);
       toast.success("User registered successfully");
 
       // clear the form
       setUserState({
-        name: "",
+        fullName: "",
         email: "",
         password: "",
         confirmPassword: "",
       });
 
-      // redirect to login page
-      router.push("/login");
+      // redirect to email verification page
+      router.push("/verify-email");
     } catch (error) {
-      console.log("Error registering user", error);
+      console.log("Error registering user", error.message);
       toast.error("Failed to register user. Please try again.");
     }
   };
+
+  const verifyOtp = async (otp) => {
+    setLoading(true);
+    console.log("inside verifyOtp");
+    try {
+      const verificationToken = sessionStorage.getItem("verificationToken");
+      const res = await axios.post(
+        `${serverUrl}/api/v1/auth/verify-email`,
+        { otp }, // Request body
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${
+              verificationToken ? verificationToken : ""
+            }`,
+          },
+        }
+      );
+
+      console.log("User verification successful", res.data);
+      toast.success("User verification successful");
+
+      // Redirect the user to the dashboard
+      router.push("/");
+
+      console.log(data);
+    } catch (error) {
+      console.error("Error verifying OTP:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // login the user
   const loginUser = async (e) => {
     e.preventDefault();
@@ -66,7 +100,7 @@ export const UserContextProvider = ({ children }) => {
         email: userState.email,
         password: userState.password,
       });
-
+      console.log("User logged in successfully", res.data);
       toast.success("User logged in successfully");
 
       setUserState({ email: "", password: "" });
@@ -74,12 +108,10 @@ export const UserContextProvider = ({ children }) => {
       await getUser(); // Refresh user details
       router.push("/"); // Redirect to dashboard
     } catch (error) {
-      console.error("Error logging in user:", error);
+      const errorMessage = "Failed to log in. Please try again.";
+      console.log("Error logging in user:", errorMessage);
 
-      const errorMessage =
-        error.response?.data?.message || "Failed to log in. Please try again.";
-
-      toast.error(errorMessage);
+      toast.error(error);
     }
   };
 
@@ -164,35 +196,6 @@ export const UserContextProvider = ({ children }) => {
       console.log("Error updating user details", error);
       setLoading(false);
       toast.error("cannot update details");
-    }
-  };
-
-  const verifyOtp = async (otp) => {
-    setLoading(true);
-    try {
-      const verificationToken = sessionStorage.getItem("verificationToken");
-
-      const response = await axios.post(
-        "/api/v1/auth/verify-email",
-        { otp } // Request body
-      );
-
-      const data = response.data;
-
-      // Save the access token in local storage
-      localStorage.setItem("accessToken", data.accessToken);
-
-      // Save the access token in the context
-      setAccessToken(data.accessToken);
-
-      // Redirect the user to the dashboard
-      router.push("/");
-
-      console.log(data);
-    } catch (error) {
-      console.error("Error verifying OTP:", error);
-    } finally {
-      setLoading(false);
     }
   };
 

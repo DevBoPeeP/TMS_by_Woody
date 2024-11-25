@@ -4,7 +4,7 @@ import React from "react";
 
 function RegisterForm() {
   const { registerUser, userState, handlerUserInput } = useUserContext();
-  const { name, email, password, confirmPassword } = userState;
+  const { fullName, email, password, confirmPassword } = userState;
   const [showPassword, setShowPassword] = React.useState(false);
 
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
@@ -30,15 +30,15 @@ function RegisterForm() {
           </a>
         </p>
         <div className="flex flex-col">
-          <label htmlFor="name" className="mb-1 text-[#999]">
+          <label htmlFor="fullName" className="mb-1 text-[#999]">
             Full Name
           </label>
           <input
             type="text"
-            id="name"
-            value={name}
-            onChange={(e) => handlerUserInput("name")(e)}
-            name="name"
+            id="fullName"
+            value={fullName}
+            onChange={(e) => handlerUserInput("fullName")(e)}
+            name="fullName"
             className="px-4 py-3 border-[2px] rounded-md outline-[#224d97] text-gray-800"
             placeholder="John Doe"
           />
@@ -115,7 +115,7 @@ function RegisterForm() {
         <div className="flex">
           <button
             type="submit"
-            disabled={!name || !email || !password || !confirmPassword}
+            disabled={!fullName || !email || !password || !confirmPassword}
             onClick={registerUser}
             className="mt-[1.5rem] flex-1 px-4 py-3 font-bold bg-[#224d97] text-white rounded-md hover:bg-[#4a86d8] transition-colors"
           >
