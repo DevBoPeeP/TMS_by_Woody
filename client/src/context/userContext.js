@@ -79,6 +79,7 @@ export const UserContextProvider = ({ children }) => {
       );
 
       console.log("User verification successful", res.data);
+      sessionStorage.setItem("accessToken", res.data.accessToken);
       toast.success("User verification successful");
 
       // Redirect the user to the dashboard
@@ -95,11 +96,22 @@ export const UserContextProvider = ({ children }) => {
   // login the user
   const loginUser = async (e) => {
     e.preventDefault();
+    console.log("Inside loginUser");
     try {
-      const res = await axios.post(`${serverUrl}/api/v1/auth/login`, {
-        email: userState.email,
-        password: userState.password,
-      });
+      const res = await axios.post(
+        `${serverUrl}/api/v1/auth/login`,
+        {
+          email: userState.email,
+          password: userState.password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken ? accessToken : ""}`,
+          },
+        }
+      );
+
       console.log("User logged in successfully", res.data);
       toast.success("User logged in successfully");
 
@@ -114,26 +126,6 @@ export const UserContextProvider = ({ children }) => {
       toast.error(error);
     }
   };
-
-  // // get user Looged in Status
-  // const userLoginStatus = async () => {
-  //   let loggedIn = false;
-  //   try {
-  //     const res = await axios.get(`${serverUrl}/api/v1/auth/login-status`);
-
-  //     // coerce the string to boolean
-  //     loggedIn = !!res.data;
-  //     setLoading(false);
-
-  //     if (!loggedIn) {
-  //       router.push("/login");
-  //     }
-  //   } catch (error) {
-  //     console.log("Error getting user login status", error);
-  //   }
-
-  //   return loggedIn;
-  // };
 
   // logout user
   const logoutUser = async () => {
