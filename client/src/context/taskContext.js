@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 
 const TasksContext = createContext();
 
-const serverUrl = "https://tms-by-woody-h42a.onrender.com/api/v1/user";
+const serverUrl = "http://localhost:5000/api/v1/user";
 
 export const TasksProvider = ({ children }) => {
   const userId = useUserContext().user._id;
@@ -26,11 +26,11 @@ export const TasksProvider = ({ children }) => {
     setTask({});
   };
 
-  const openModalForEdit = (task) => {
-    setModalMode("edit");
-    setIsEditing(true);
-    setActiveTask(task);
-  };
+  // const openModalForEdit = (task) => {
+  //   setModalMode("edit");
+  //   setIsEditing(true);
+  //   setActiveTask(task);
+  // };
 
   const openProfileModal = () => {
     setProfileModal(true);
@@ -140,29 +140,32 @@ export const TasksProvider = ({ children }) => {
   return (
     <TasksContext.Provider
       value={{
-        tasks,
-        loading,
-        task,
-        tasks,
-        getTask,
-        createTask,
-        updateTask,
-        deleteTask,
-        priority,
-        setPriority,
-        handleInput,
-        isEditing,
-        setIsEditing,
-        openModalForAdd,
-        openModalForEdit,
-        activeTask,
-        closeModal,
-        modalMode,
-        openProfileModal,
-        activeTasks,
-        completedTasks,
-        profileModal,
+        name: "name",
       }}
+      // value={{
+      //   tasks,
+      //   loading,
+      //   task,
+      //   tasks,
+      //   getTask,
+      //   createTask,
+      //   updateTask,
+      //   deleteTask,
+      //   priority,
+      //   setPriority,
+      //   handleInput,
+      //   isEditing,
+      //   setIsEditing,
+      //   openModalForAdd,
+      //   openModalForEdit,
+      //   activeTask,
+      //   closeModal,
+      //   modalMode,
+      //   openProfileModal,
+      //   activeTasks,
+      //   completedTasks,
+      //   profileModal,
+      // }}
     >
       {children}
     </TasksContext.Provider>

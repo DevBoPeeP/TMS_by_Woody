@@ -9,7 +9,7 @@ const UserContext = React.createContext();
 axios.defaults.withCredentials = false;
 
 export const UserContextProvider = ({ children }) => {
-  const serverUrl = "https://tms-by-woody-h42a.onrender.com";
+  const serverUrl = "http://localhost:5000";
 
   const router = useRouter();
 
@@ -130,6 +130,25 @@ export const UserContextProvider = ({ children }) => {
 
       toast.error(error);
     }
+  };
+
+  const userLoginStatus = async () => {
+    let loggedIn = false;
+    try {
+      const res = await axios.get(`${serverUrl}/api/v1/login-status`);
+
+      // coerce the string to boolean
+      loggedIn = !!res.data;
+      setLoading(false);
+
+      if (!loggedIn) {
+        router.push("/login");
+      }
+    } catch (error) {
+      console.log("Error getting user login status", error);
+    }
+
+    return loggedIn;
   };
 
   // logout user

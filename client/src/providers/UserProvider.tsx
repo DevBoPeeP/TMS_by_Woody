@@ -10,7 +10,8 @@ interface Props {
 function UserProvider({ children }: Props) {
   return (
     <UserContextProvider>
-      <TasksProvider>{children}</TasksProvider>
+      {children}
+      {/* <TasksProvider>{children}</TasksProvider> */}
     </UserContextProvider>
   );
 }
