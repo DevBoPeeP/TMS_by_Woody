@@ -126,24 +126,6 @@ const loginUser = async (req, res) => {
   }
 };
 
-// login status
-// const userLoginStatus = async (req, res) => {
-//   const userPayload = generateVerifyToken(req.user);
-//   if (!userPayload) {
-//     // 401 Unauthorized
-//     res.status(401).json({ message: "Not authorized, please login!" });
-//   }
-
-// verify the token
-//   const decoded = jwt.verify(userPayload, process.env.JWT_SECRET);
-
-//   if (decoded) {
-//     return res.status(200).json(true);
-//   } else {
-//     return res.status(401).json(false);
-//   }
-// };
-
 // logout user
 const logoutUser = async (req, res) => {
   res.status(200).json({ message: "User logged out" });

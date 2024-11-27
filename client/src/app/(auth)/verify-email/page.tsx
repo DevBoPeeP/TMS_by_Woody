@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect } from "react";
-import OtpForm from "../../components/auth/OtpForm/OtpForm";
+import OtpForm from "@/app/Components/Auth/OtpForm/OtpForm";
 import { useUserContext } from "@/context/userContext";
 import { useRouter } from "next/navigation";
 

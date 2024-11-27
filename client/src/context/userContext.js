@@ -9,7 +9,7 @@ const UserContext = React.createContext();
 axios.defaults.withCredentials = false;
 
 export const UserContextProvider = ({ children }) => {
-  const serverUrl = "http://localhost:5000";
+  const serverUrl = "https://tms-by-woody-h42a.onrender.com";
 
   const router = useRouter();
 
@@ -55,8 +55,13 @@ export const UserContextProvider = ({ children }) => {
       // redirect to email verification page
       router.push("/verify-email");
     } catch (error) {
-      console.log("Error registering user", error.message);
-      toast.error("Failed to register user. Please try again.");
+      // Handle potential errors from the API call
+      if (error.response && error.response.data) {
+        toast.error(error.response.data.message); // Use specific error message from response
+      } else {
+        console.log("Error registering user", error.message);
+        toast.error("Failed to register user. Please try again.");
+      }
     }
   };
 
@@ -296,17 +301,17 @@ export const UserContextProvider = ({ children }) => {
     }
   };
 
-  // useEffect(() => {
-  //   const loginStatusGetUser = async () => {
-  //     const isLoggedIn = await userLoginStatus();
+  useEffect(() => {
+    const loginStatusGetUser = async () => {
+      const isLoggedIn = await userLoginStatus();
 
-  //     if (isLoggedIn) {
-  //       await getUser();
-  //     }
-  //   };
+      if (isLoggedIn) {
+        await getUser();
+      }
+    };
 
-  //   loginStatusGetUser();
-  // }, []);
+    loginStatusGetUser();
+  }, []);
 
   useEffect(() => {
     if (user.role === "admin") {
