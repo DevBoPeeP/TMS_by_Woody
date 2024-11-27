@@ -75,6 +75,17 @@ function Modal() {
           />
         </div>
         <div className="flex flex-col gap-1">
+          <label htmlFor="category">Category</label>
+          <textarea
+            className="bg-[#F9F9F9] p-2 rounded-md border resize-none"
+            name="category"
+            placeholder="category"
+            rows={4}
+            value={task.category}
+            onChange={(e) => handleInput("category")(e)}
+          />
+        </div>
+        <div className="flex flex-col gap-1">
           <label htmlFor="priority">Select Priority</label>
           <select
             className="bg-[#F9F9F9] p-2 rounded-md border cursor-pointer"

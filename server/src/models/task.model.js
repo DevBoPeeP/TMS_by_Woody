@@ -17,6 +17,7 @@ const taskSchema = new mongoose.Schema(
     category: {
       type: String,
       require: true,
+      trim: true,
     },
 
     status: {
